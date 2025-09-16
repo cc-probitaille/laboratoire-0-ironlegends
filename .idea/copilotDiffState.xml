@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/docs/modeles/dss-redemarrerJeu.puml">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/docs/modeles/dss-redemarrerJeu.puml" />
+              <option name="originalContent" value="@startuml&#10;title DSS pour le scénario Redémarrer&#10;&#10;actor &quot;:Joueur&quot; as Joueur&#10;participant &quot;:Système&quot; as Système&#10;&#10;Joueur -&gt; Système : redémarrerJeu()&#10;&#10;note right of Système&#10;Toutes les instances de Joueur en cours ont été supprimées.&#10;end note&#10;&#10;@enduml&#10;" />
+              <option name="updatedContent" value="@startuml&#10;title DSS pour le scénario Redémarrer&#10;&#10;actor &quot;:Joueur&quot; as Joueur&#10;participant &quot;:Système&quot; as Système&#10;&#10;Joueur -&gt; Système : redémarrerJeu()&#10;&#10;note right of Système&#10;Toutes les instances de Joueur en cours ont été supprimées.&#10;end note&#10;&#10;@enduml" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

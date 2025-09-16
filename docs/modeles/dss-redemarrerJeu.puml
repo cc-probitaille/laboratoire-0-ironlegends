@@ -1,1 +1,13 @@
-// Vous devez compléter ce fichier
+@startuml
+title DSS pour le scénario Redémarrer
+
+actor ":Joueur" as Joueur
+participant ":Système" as Système
+
+Joueur -> Système : redémarrerJeu()
+
+note right of Système
+Toutes les instances de Joueur en cours ont été supprimées.
+end note
+
+@enduml
