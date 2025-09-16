@@ -168,6 +168,10 @@ Voici la même figure, mais sous forme de diagramme de séquence avec l'acteur. 
 1. Le Joueur demande à redémarrer l'application.
 2. Le Système termine tous les jeux en cours et redémarre l'application.
 
+### Diagramme de classes logicielles
+
+![Diagramme de classes logicielles](http://www.plantuml.com/plantuml/proxy?cache=no&fmt=svg&src=https://raw.githubusercontent.com/cc-probitaille/laboratoire-0-ironlegends/refs/heads/master/docs/modeles/App.puml)
+
 ### Diagramme de cas d'utilisation
 
 ![Diagramme de cas d'utilisation](http://www.plantuml.com/plantuml/proxy?cache=no&fmt=svg&src=https://raw.githubusercontent.com/cc-probitaille/laboratoire-0-ironlegends/refs/heads/master/docs/modeles/dcu.puml)
