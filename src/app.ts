@@ -2,7 +2,7 @@ import express from 'express';
 import ExpressSession from 'express-session';
 import logger from 'morgan';
 import flash from 'express-flash-plus';
-
+import { Joueur } from './core/joueur';
 import { jeuRoutes } from './routes/jeuRouter';
 
 // Creates and configures an ExpressJS web server.
@@ -61,13 +61,28 @@ class App {
 
     // Route pour classement (stats)
     router.get('/stats', (req, res, next) => {
+      const joueurs: Array<Joueur> = JSON.parse(jeuRoutes.controleurJeu.joueurs);
+      const joueursAvecRatio = joueurs.map(j => {
+        const ratio = j.lancers > 0 ? j.lancersGagnes / j.lancers : 0;
+        return {
+            nom: j.nom,
+            lancers: j.lancers,
+            lancersGagnes: j.lancersGagnes,
+            ratio: ratio
+        };
+      });
+
+      // trier par ratio décroissant
+      joueursAvecRatio.sort((a, b) => b.ratio - a.ratio);
+
+      // afficher la page
       res.render('stats',
         // passer objet au gabarit (template) Pug
         {
           title: `${titreBase}`,
           user: user,
           // créer nouveau tableau de joueurs qui est trié par ratio
-          joueurs: JSON.parse(jeuRoutes.controleurJeu.joueurs)
+          joueurs: joueursAvecRatio
         });
     });
 
