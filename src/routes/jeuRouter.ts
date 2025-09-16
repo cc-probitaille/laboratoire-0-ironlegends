@@ -20,6 +20,7 @@ export class JeuRouter {
   constructor() {
     this._controleurJeu = new JeuDeDes();  // un routeur pointe vers au moins un contrôleur GRASP
     this._router = Router();
+    this._controleurJeu.redemarrerJeu(); // redémarrer le jeu au démarrage du serveur
     this.init();
   }
 
@@ -44,6 +45,29 @@ export class JeuRouter {
           message: 'Success',
           status: res.status,
           joueur: joueurObj
+        });
+    } catch (error) {
+      // console.error(error);
+      this._errorCode500(error, req, res);
+    }
+  }
+
+  /**
+   * redémarrer le jeu : effacer tous les joueurs
+   * @param req
+   * @param res
+   * @param next
+   */
+  public redemarrerJeu(req: Request, res: Response, next: NextFunction) {
+    try {
+      // Invoquer l'opération système (du DSS) dans le contrôleur GRASP
+      const resultat = this._controleurJeu.redemarrerJeu();
+      req.flash('info', 'Le jeu a été redémarré. Tous les joueurs ont été supprimés.');
+        res.status(200)
+        .send({
+          message: 'Success',
+          status: res.status,
+          resultat
         });
     } catch (error) {
       // console.error(error);
@@ -114,6 +138,7 @@ export class JeuRouter {
     this._router.post('/demarrerJeu', this.demarrerJeu.bind(this)); // pour .bind voir https://stackoverflow.com/a/15605064/1168342
     this._router.get('/jouer/:nom', this.jouer.bind(this)); // pour .bind voir https://stackoverflow.com/a/15605064/1168342
     this._router.get('/terminerJeu/:nom', this.terminerJeu.bind(this)); // pour .bind voir https://stackoverflow.com/a/15605064/1168342
+    this._router.get('/redemarrerJeu', this.redemarrerJeu.bind(this)); // route pour redémarrer le jeu
   }
 
 }

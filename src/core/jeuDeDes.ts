@@ -33,6 +33,19 @@ export class JeuDeDes {
         return JSON.stringify(joueur);
     }
 
+    /**
+     * Redémarrer le jeu : effacer tous les joueurs.
+     * @returns message de confirmation
+     */
+
+    public redemarrerJeu(): string {
+        this._joueurs.clear();  // Supprime toutes les instances de Joueur
+        const resultat = {
+            message: "Le jeu a été redémarré."
+        };
+        return JSON.stringify(resultat);
+    }
+
     public jouer(nom: string): string {
         const joueur = this._joueurs.get(nom);
         if (!joueur) {
