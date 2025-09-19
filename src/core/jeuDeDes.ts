@@ -10,11 +10,13 @@ export class JeuDeDes {
     private _joueurs: Map<string, Joueur>;
     private _d1: De;
     private _d2: De;
+    private _d3: De;
 
     constructor() {
         this._joueurs = new Map<string, Joueur>();
         this._d1 = new De();
         this._d2 = new De();
+        this._d3 = new De();
     }
 
     /**
@@ -38,13 +40,13 @@ export class JeuDeDes {
      * @returns message de confirmation
      */
 
-    public redemarrerJeu(): string {
+    public redemarrerJeu() {
         this._joueurs.clear();  // Supprime toutes les instances de Joueur
         const resultat = {
             message: "Le jeu a été redémarré."
         };
         return JSON.stringify(resultat);
-    }
+    };
 
     public jouer(nom: string): string {
         const joueur = this._joueurs.get(nom);
@@ -53,7 +55,7 @@ export class JeuDeDes {
         }
         const somme = this.brasser()
         joueur.lancer();
-        const gagne = somme === 7;
+        const gagne = somme <= 10;
         if (gagne) joueur.gagner();
         const resultat = {
             nom: nom,
@@ -62,6 +64,7 @@ export class JeuDeDes {
             reussites: joueur.lancersGagnes,
             v1: this._d1.valeur,
             v2: this._d2.valeur,
+            v3: this._d3.valeur,
             message: `Vous avez ${(gagne ? "gagné!!!" : "perdu.")}`
         };
         // ne pas retourner l'objet de la couche domaine
@@ -85,9 +88,11 @@ export class JeuDeDes {
     brasser() {
         this._d1.brasser();
         this._d2.brasser();
+        this._d3.brasser();
         const v1 = this._d1.valeur;
         const v2 = this._d2.valeur;
-        const somme = v1 + v2;
+        const v3 = this._d3.valeur;
+        const somme = v1 + v2 + v3;
         return somme;
     }
 

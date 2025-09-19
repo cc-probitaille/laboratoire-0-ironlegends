@@ -22,7 +22,8 @@ describe('GET /api/v1/jeu/jouer/:id', () => {
             expect(resultat.lancers).toBe(i + 1);
             expect(resultat.v1).toBeWithin(1, 7);
             expect(resultat.v2).toBeWithin(1, 7);
-            expect(resultat.somme).toBe(resultat.v1 + resultat.v2);
+            expect(resultat.v3).toBeWithin(1, 7);
+            expect(resultat.somme).toBe(resultat.v1 + resultat.v2 + resultat.v3);
             expect(resultat.nom).toBe(testNom1);
         });
     }
@@ -34,4 +35,5 @@ describe('GET /api/v1/jeu/jouer/:id', () => {
         expect(response.body.error).toInclude("n'existe pas");
         expect(response.body.error).toInclude(testNom2);
     });
+
 });

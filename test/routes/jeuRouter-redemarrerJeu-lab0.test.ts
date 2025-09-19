@@ -49,6 +49,18 @@ describe('redemarrerJeu.test.ts', () => {
           expect(response.body.joueur.nom).toBe('Joueur3');
       });
 
+      it('devrait retourner 404 quand on essaie de jouer avec un joueur inexistant après redémarrage', async () => {
+          // Redémarrer le jeu pour supprimer tous les joueurs
+          await request(app)
+              .get('/api/v1/jeu/redemarrerJeu');
+
+          // Essayer de jouer avec un joueur qui n'existe plus
+          const response = await request(app)
+              .get('/api/v1/jeu/jouer/JoueurInexistant');
+
+          expect(response.status).toBe(404);
+      });
+
       it('devrait gérer les erreurs correctement', async () => {
           // Simuler une erreur en remplaçant temporairement la méthode redemarrerJeu
           const originalRedemarrerJeu = jeuRoutes.controleurJeu.redemarrerJeu;
