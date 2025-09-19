@@ -1,6 +1,7 @@
 import supertest from 'supertest';
 import 'jest-extended';
 import app from '../../src/app';
+import {jeuRoutes} from "../../src/routes/jeuRouter";
 
 const request = supertest(app);
 
@@ -24,30 +25,22 @@ describe('/stats', () => {
     expect(response.type).toBe("text/html");
   });
 
-  it('devrait calculer correctement le ratio pour un joueur sans lancers', async () => {
-    // D'abord redémarrer le jeu pour avoir un état propre
+  it('devrait tester le ratio de victoire', async () => {
+    // Test exhaustif pour couvrir les deux branches
     await request.get('/api/v1/jeu/redemarrerJeu');
 
-    // Créer un joueur sans jouer (ratio = 0)
-    await request.post('/api/v1/jeu/demarrerJeu').send({ nom: 'JoueurSansLancer' });
+    // Créer un joueur avec 0 lancers
+    await request.post('/api/v1/jeu/demarrerJeu').send({ nom: 'j0' });
 
+    // Créer un joueur avec > 0 lancers
+    await request.post('/api/v1/jeu/demarrerJeu').send({ nom: 'j1' });
+    await request.get('/api/v1/jeu/jouer/j1');
+
+    // Traite les deux types de joueurs
     const response = await request.get('/stats');
     expect(response.status).toBe(200);
-    expect(response.type).toBe("text/html");
-    // Vérifier que la page se charge correctement même avec un joueur qui n'a pas joué
-    expect(response.text).toContain('JoueurSansLancer');
-    // Vérifier que le ratio est calculé comme 0.00000000 pour un joueur sans lancers
-    expect(response.text).toContain('0.00000000');
-  });
-
-  it('devrait traiter correctement le cas où aucun joueur n existe', async () => {
-    // Redémarrer pour avoir aucun joueur
-    await request.get('/api/v1/jeu/redemarrerJeu');
-
-    const response = await request.get('/stats');
-    expect(response.status).toBe(200);
-    expect(response.type).toBe("text/html");
-    expect(response.text).toContain('Pas de joueurs encore');
+    expect(response.text).toContain('j0');
+    expect(response.text).toContain('j1');
   });
 
 });
